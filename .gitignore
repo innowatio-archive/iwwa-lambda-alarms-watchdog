@@ -1,0 +1,4 @@
+__BUILD__/
+coverage/
+node_modules/
+npm-debug.log

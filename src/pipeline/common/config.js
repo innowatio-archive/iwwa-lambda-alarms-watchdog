@@ -1,0 +1,1 @@
+export var ALARMS_TABLE_NAME = process.env.ALARMS_DYNAMODB_TABLE_NAME;
