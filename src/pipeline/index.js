@@ -7,16 +7,17 @@ import * as config from "./common/config";
 import * as dynamodb from "./common/dynamodb";
 import * as sns from "./common/sns";
 
-var log = function log (message) {
+var pipelineLog = function pipelineLog (message) {
     var i = 0;
-    return function () {
+    return function (element) {
         if (!config.DEBUG) {
-            return;
+            return element;
         }
         if (i === 0) {
             console.log(message);
         }
-        console.log(inspect(arguments));
+        console.log(inspect(element));
+        return element;
     };
 };
 
@@ -72,9 +73,9 @@ export default function pipeline (event) {
         id: event.data.id
     });
     return getAlarmsByPod(podReading.podId)
-        .map(log("Alarms by pod:"))
+        .map(pipelineLog("Alarms by pod:"))
         .filter(partial(check, podReading))
-        .map(log("Alarms that passed the check:"))
+        .map(pipelineLog("Alarms that passed the check:"))
         .map(partial(trigger, podReading))
-        .map(log("SNS responses:"));
+        .map(pipelineLog("SNS responses:"));
 }
