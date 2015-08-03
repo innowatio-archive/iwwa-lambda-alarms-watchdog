@@ -8,8 +8,13 @@
     "url": "https://github.com/innowation/iwwa-lambda-alarms-watchdog.git"
   },
   "dependencies": {
+    "aws-sdk": "^2.1.42",
+    "bluebird": "^2.9.34",
     "dotenv": "^1.2.0",
-    "kinesis-router": "^1.0.0"
+    "kinesis-router": "^1.1.0",
+    "moment": "^2.10.6",
+    "ramda": "^0.17.1",
+    "sift": "^2.0.3"
   },
   "devDependencies": {
     "babel": "^5.6.23",

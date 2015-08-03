@@ -11,16 +11,22 @@ describe("`trigger`", function () {
 
     var trigger = pipeline.__get__("trigger");
 
+    var config = {
+        ALARMS_TOPIC_ARN: "0"
+    };
+
     var sns = {
-        publish: sinon.spy()
+        publish: sinon.stub().returns(BPromise.resolve())
     };
 
     before(function () {
         pipeline.__Rewire__("sns", sns);
+        pipeline.__Rewire__("config", config);
     });
 
     after(function () {
         pipeline.__ResetDependency__("sns");
+        pipeline.__ResetDependency__("config");
     });
 
     beforeEach(function () {
@@ -36,18 +42,26 @@ describe("`trigger`", function () {
         expect(ret).to.be.an.instanceOf(BPromise);
     });
 
-    it("for each notifier publishes a notification to sns", function () {
-        var podReading = {};
-        var alarm = {
-            notifiers: [0, 1, 2]
+    it("publishes a notification to sns", function () {
+        var podReading = {
+            id: "0",
+            podId: "1",
+            date: new Date("2015-08-03").getTime()
         };
-        return trigger(podReading, alarm)
-            .then(function () {
-                expect(sns.publish).to.have.callCount(3);
-                expect(sns.publish).to.have.been.calledWith(0);
-                expect(sns.publish).to.have.been.calledWith(1);
-                expect(sns.publish).to.have.been.calledWith(2);
-            });
+        var alarm = {
+            name: "Alarm"
+        };
+        trigger(podReading, alarm);
+        expect(sns.publish).to.have.been.calledWith({
+            Message: [
+                "Pod reading 0",
+                "from site 1",
+                "triggered alarm Alarm",
+                "on Mon, Aug 3, 2015 2:00 AM"
+            ].join("\n"),
+            Subject: "Triggered alarm",
+            TopicArn: "0"
+        });
     });
 
 });

@@ -18,7 +18,7 @@ describe("`getAlarmsByPod`", function () {
     };
 
     var dynamodb = {
-        query: sinon.stub().returns(BPromise.resolve({
+        scan: sinon.stub().returns(BPromise.resolve({
             Items: [0, 1, 2]
         }))
     };
@@ -34,7 +34,7 @@ describe("`getAlarmsByPod`", function () {
     });
 
     beforeEach(function () {
-        dynamodb.query.reset();
+        dynamodb.scan.reset();
     });
 
     it("returns a promise", function () {
@@ -44,10 +44,13 @@ describe("`getAlarmsByPod`", function () {
 
     it("queries dynamodb", function () {
         getAlarmsByPod("podId");
-        expect(dynamodb.query).to.have.been.calledWith({
-            Item: {
-                podId: "podId"
+        expect(dynamodb.scan).to.have.been.calledWith({
+            ExpressionAttributeValues: {
+                podId: {
+                    S: "podId"
+                }
             },
+            FilterExpression: "podId = :podId",
             TableName: "TABLE_NAME"
         });
     });

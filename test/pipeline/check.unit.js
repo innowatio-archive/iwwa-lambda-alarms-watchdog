@@ -10,8 +10,51 @@ describe("`check`", function () {
 
     var check = pipeline.__get__("check");
 
-    it("TODO (returns true for now)", function () {
-        expect(check()).to.equal(true);
+    var filter = sinon.stub();
+    var sift = sinon.stub().returns(filter);
+
+    before(function () {
+        pipeline.__Rewire__("sift", sift);
+    });
+
+    after(function () {
+        pipeline.__ResetDependency__("sift");
+    });
+
+    afterEach(function () {
+        filter.reset();
+        sift.reset();
+    });
+
+    it("should filter the pod reading through sift", function () {
+        var podReading = {
+            date: new Date("2015-08-03").getTime()
+        };
+        var rule = {};
+        check(podReading, rule);
+        expect(sift).to.have.been.calledWith(rule);
+        expect(filter).to.have.callCount(1);
+    });
+
+    it("should convert the pod reading date to a \"comparable\" date format", function () {
+        var podReading = {
+            date: new Date("2015-08-03").getTime()
+        };
+        var rule = {};
+        check(podReading, rule);
+        expect(filter).to.have.been.calledWith({
+            date: {
+                hour: 2,
+                millisecond: 0,
+                minute: 0,
+                month: 7,
+                monthDay: 3,
+                second: 0,
+                week: 32,
+                weekDay: 1,
+                year: 2015
+            }
+        });
     });
 
 });

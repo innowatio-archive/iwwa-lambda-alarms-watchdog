@@ -5,4 +5,4 @@ var dynamodb = new DynamoDB({
     apiVersion: "2012-08-10"
 });
 
-export var query = promisify(dynamodb.query, dynamodb);
+export var scan = promisify(dynamodb.scan, dynamodb);
