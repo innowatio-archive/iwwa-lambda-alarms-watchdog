@@ -1,8 +1,11 @@
-import {DynamoDB} from "aws-sdk";
+import {DynamoDB as AWSDynamoDB} from "aws-sdk";
+import {DynamoDB as DOCDynamoDB} from "dynamodb-doc";
 import {promisify} from "bluebird";
 
-var dynamodb = new DynamoDB({
+var awsClient = new AWSDynamoDB({
     apiVersion: "2012-08-10"
 });
 
-export var scan = promisify(dynamodb.scan, dynamodb);
+var docClient = new DOCDynamoDB(awsClient);
+
+export var scan = promisify(docClient.scan, docClient);
