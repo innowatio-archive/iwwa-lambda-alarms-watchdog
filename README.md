@@ -1,3 +1,8 @@
+[![Build Status](https://travis-ci.org/innowatio/iwwa-lambda-alarms-watchdog.svg?branch=master)](https://travis-ci.org/innowatio/iwwa-lambda-alarms-watchdog)
+[![Coverage Status](https://coveralls.io/repos/innowatio/iwwa-lambda-alarms-watchdog/badge.svg?branch=master&service=github)](https://coveralls.io/github/innowatio/iwwa-lambda-alarms-watchdog?branch=master)
+[![Dependency Status](https://david-dm.org/innowatio/iwwa-lambda-alarms-watchdog.svg)](https://david-dm.org/innowatio/iwwa-lambda-alarms-watchdog)
+[![devDependency Status](https://david-dm.org/innowatio/iwwa-lambda-alarms-watchdog/dev-status.svg)](https://david-dm.org/innowatio/iwwa-lambda-alarms-watchdog#info=devDependencies)
+
 # iwwa-lambda-alarms-watchdog
 
 Lambda function to trigger alarms.
@@ -33,6 +38,7 @@ are kept secret).
 The following environment variables are needed to configure the function:
 
 - `ALARMS_DYNAMODB_TABLE_NAME`
+- `ALARMS_SNS_TOPIC_ARN`
 
 NOTE: since the project uses `lambda-deploy`, in the build environment (Travis)
 we need to define the above variables with their name prefixed by
