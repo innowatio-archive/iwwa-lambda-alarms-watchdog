@@ -46,7 +46,7 @@ describe("`getAlarmsByPod`", function () {
         getAlarmsByPod("podId");
         expect(dynamodb.scan).to.have.been.calledWith({
             ExpressionAttributeValues: {
-                podId: {
+                ":podId": {
                     S: "podId"
                 }
             },

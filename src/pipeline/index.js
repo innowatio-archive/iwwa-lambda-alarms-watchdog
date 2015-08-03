@@ -10,7 +10,7 @@ var getAlarmsByPod = function getAlarmsByPod (podId) {
     return dynamodb.scan({
         TableName: config.ALARMS_TABLE_NAME,
         ExpressionAttributeValues: {
-            podId: {
+            ":podId": {
                 S: podId
             }
         },
