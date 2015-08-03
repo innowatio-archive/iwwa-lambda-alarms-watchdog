@@ -1,6 +1,3 @@
-import dotenv from "dotenv";
-dotenv.load();
-
 import router from "kinesis-router";
 import pipeline from "./pipeline/";
 
