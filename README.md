@@ -39,6 +39,7 @@ The following environment variables are needed to configure the function:
 
 - `ALARMS_DYNAMODB_TABLE_NAME`
 - `ALARMS_SNS_TOPIC_ARN`
+- `TIMEZONE`
 
 NOTE: since the project uses `lambda-deploy`, in the build environment (Travis)
 we need to define the above variables with their name prefixed by

@@ -12,7 +12,8 @@ describe("`trigger`", function () {
     var trigger = pipeline.__get__("trigger");
 
     var config = {
-        ALARMS_TOPIC_ARN: "0"
+        ALARMS_TOPIC_ARN: "0",
+        TIMEZONE: "Europe/Rome"
     };
 
     var sns = {
@@ -46,7 +47,7 @@ describe("`trigger`", function () {
         var podReading = {
             id: "0",
             podId: "1",
-            date: new Date("2015-08-03").getTime()
+            date: new Date("2015-08-03T00:00:00.000Z").getTime()
         };
         var alarm = {
             name: "Alarm"

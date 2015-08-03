@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import {merge, partial, prop} from "ramda";
 import sift from "sift";
 
@@ -46,7 +46,7 @@ var trigger = function trigger (podReading, alarm) {
             `Pod reading ${podReading.id}`,
             `from site ${podReading.podId}`,
             `triggered alarm ${alarm.name}`,
-            `on ${moment(podReading.date).format("llll")}`
+            `on ${moment(podReading.date).tz(config.TIMEZONE).format("llll")}`
         ].join("\n"),
         Subject: "Triggered alarm",
         TopicArn: config.ALARMS_TOPIC_ARN

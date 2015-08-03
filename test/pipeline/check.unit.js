@@ -28,7 +28,7 @@ describe("`check`", function () {
 
     it("should filter the pod reading through sift", function () {
         var podReading = {
-            date: new Date("2015-08-03").getTime()
+            date: new Date("2015-08-03T00:00:00.000Z").getTime()
         };
         var rule = {};
         check(podReading, rule);
@@ -38,7 +38,7 @@ describe("`check`", function () {
 
     it("should convert the pod reading date to a \"comparable\" date format", function () {
         var podReading = {
-            date: new Date("2015-08-03").getTime()
+            date: new Date("2015-08-03T00:00:00.000Z").getTime()
         };
         var rule = {};
         check(podReading, rule);
