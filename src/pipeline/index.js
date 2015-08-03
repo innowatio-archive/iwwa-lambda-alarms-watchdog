@@ -1,10 +1,24 @@
 import moment from "moment-timezone";
 import {merge, partial, prop} from "ramda";
 import sift from "sift";
+import {inspect} from "util";
 
 import * as config from "./common/config";
 import * as dynamodb from "./common/dynamodb";
 import * as sns from "./common/sns";
+
+var log = function log (message) {
+    var i = 0;
+    return function () {
+        if (!config.DEBUG) {
+            return;
+        }
+        if (i === 0) {
+            console.log(message);
+        }
+        console.log(inspect(arguments));
+    };
+};
 
 var getAlarmsByPod = function getAlarmsByPod (podId) {
     return dynamodb.scan({
@@ -58,6 +72,9 @@ export default function pipeline (event) {
         id: event.data.id
     });
     return getAlarmsByPod(podReading.podId)
+        .map(log("Alarms by pod:"))
         .filter(partial(check, podReading))
-        .map(partial(trigger, podReading));
+        .map(log("Alarms that passed the check:"))
+        .map(partial(trigger, podReading))
+        .map(log("SNS responses:"));
 }
