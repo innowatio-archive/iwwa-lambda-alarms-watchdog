@@ -19,7 +19,7 @@ var getAlarmsByPod = function getAlarmsByPod (podId) {
 };
 
 var replaceDate = function replaceDate (podReading) {
-    var date = moment(podReading.date);
+    var date = moment(podReading.date).utc();
     return merge(podReading, {
         date: {
             millisecond: date.millisecond(),

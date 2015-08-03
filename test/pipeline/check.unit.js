@@ -44,7 +44,7 @@ describe("`check`", function () {
         check(podReading, rule);
         expect(filter).to.have.been.calledWith({
             date: {
-                hour: 2,
+                hour: 0,
                 millisecond: 0,
                 minute: 0,
                 month: 7,
