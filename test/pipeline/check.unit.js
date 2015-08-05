@@ -31,10 +31,10 @@ describe("`check`", function () {
             date: new Date("2015-08-03T00:00:00.000Z").getTime()
         };
         var alarm = {
-            rule: {}
+            rule: "{}"
         };
         check(podReading, alarm);
-        expect(sift).to.have.been.calledWith(alarm.rule);
+        expect(sift).to.have.been.calledWith({});
         expect(filter).to.have.callCount(1);
     });
 
@@ -43,7 +43,7 @@ describe("`check`", function () {
             date: new Date("2015-08-03T00:00:00.000Z").getTime()
         };
         var alarm = {
-            rule: {}
+            rule: "{}"
         };
         check(podReading, alarm);
         expect(filter).to.have.been.calledWith({

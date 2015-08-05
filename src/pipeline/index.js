@@ -50,7 +50,8 @@ var replaceDate = function replaceDate (podReading) {
 
 var check = function check (podReading, alarm) {
     podReading = replaceDate(podReading);
-    return sift(alarm.rule)(podReading);
+    var rule = JSON.parse(alarm.rule);
+    return sift(rule)(podReading);
 };
 
 var trigger = function trigger (podReading, alarm) {
